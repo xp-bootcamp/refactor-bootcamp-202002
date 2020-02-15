@@ -3,25 +3,48 @@ package cc.xpbootcamp.warmup.cashier;
 import java.util.List;
 
 public class Order {
-    String cName;
-    String addr;
-    List<LineItem> lineItemList;
+    private String customerName;
+    private String customerAddress;
+    private List<Item> items;
+    private double taxRate = 0.10;
 
-    public Order(String cName, String addr, List<LineItem> lineItemList) {
-        this.cName = cName;
-        this.addr = addr;
-        this.lineItemList = lineItemList;
+    public Order(String cName, String addr, List<Item> items) {
+        this.customerName = cName;
+        this.customerAddress = addr;
+        this.items = items;
     }
 
-    public String getCustomerName() {
-        return cName;
+    String getCustomerName() {
+        return customerName;
     }
 
-    public String getCustomerAddress() {
-        return addr;
+    String getCustomerAddress() {
+        return customerAddress;
     }
 
-    public List<LineItem> getLineItems() {
-        return lineItemList;
+    public void setTaxRate(double taxRate) {
+        this.taxRate = taxRate;
     }
+
+    List<Item> getLineItems() {
+        return items;
+    }
+
+    private double getPreTaxAmount() {
+        double preTaxAmount = 0d;
+        for (Item item : items) {
+            preTaxAmount += item.amount();
+        }
+        return preTaxAmount;
+    }
+
+    double getTotalTax() {
+        return getPreTaxAmount() * taxRate;
+    }
+
+    double getTotalAmount() {
+        return getPreTaxAmount() + getTotalTax();
+    }
+
+
 }
