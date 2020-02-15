@@ -26,6 +26,16 @@ public class FibonacciNumbersTest {
         assertEquals(1, value);
     }
 
+    @Test
+    public void should_return_2_when_calculate_value_given_3_position(){
+        long value = fn.calculate(2);
+        assertEquals(2, value);
+    }
 
+    @Test
+    public void should_return_3_when_calculate_value_given_4_position(){
+        long value = fn.calculate(3);
+        assertEquals(3, value);
+    }
 
 }
