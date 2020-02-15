@@ -45,5 +45,13 @@ public class FibonacciNumbersTest {
     }
 
 
+    @Test
+    public void should_return_1_1_2_when_create__fibonacci_numbers(){
+        long[] finonacciNumbers = fn.create(3);
+        assertEquals(finonacciNumbers[0],1);
+        assertEquals(finonacciNumbers[1],1);
+        assertEquals(finonacciNumbers[2],2);
+    }
+
 
 }
