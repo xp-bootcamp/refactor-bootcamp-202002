@@ -38,4 +38,12 @@ public class FibonacciNumbersTest {
         assertEquals(3, value);
     }
 
+    @Test
+    public void should_return_12586269025L_when_calculate_value_given_50_position(){
+        long value = fn.calculate(49);
+        assertEquals(12586269025L, value);
+    }
+
+
+
 }
