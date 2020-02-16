@@ -26,4 +26,11 @@ class FibonacciTest {
         long result = fibonacci.getFibonacci(6);
         assertEquals(8, result);
     }
+
+    @Test
+    void should_return_12586269025L_when_calc_position_is_50() {
+        Fibonacci fibonacci = new Fibonacci();
+        long result = fibonacci.getFibonacci(50);
+        assertEquals(12586269025L, result);
+    }
 }
