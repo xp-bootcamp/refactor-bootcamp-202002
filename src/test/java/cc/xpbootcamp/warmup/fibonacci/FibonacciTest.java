@@ -1,8 +1,10 @@
 package cc.xpbootcamp.warmup.fibonacci;
 
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class FibonacciTest {
     @Test
@@ -32,5 +34,12 @@ class FibonacciTest {
         Fibonacci fibonacci = new Fibonacci();
         long result = fibonacci.getFibonacci(50);
         assertEquals(12586269025L, result);
+    }
+
+    @Test
+    void should_throw_Exception_when_position_lower_than_1_or_upper_than_50() {
+        Fibonacci fibonacci = new Fibonacci();
+        assertThrows(ValueException.class, () ->fibonacci.getFibonacci(0), "position is out of bounding");
+        assertThrows(ValueException.class, () ->fibonacci.getFibonacci(51), "position is out of bounding");
     }
 }
