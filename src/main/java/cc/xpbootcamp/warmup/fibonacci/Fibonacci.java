@@ -6,6 +6,14 @@ public class Fibonacci {
     }
 
     public long getFibonacci(int position) {
-        return 1;
+        if (position == 1)
+        {
+            return 1;
+        }
+        if (position ==2)
+        {
+            return 1;
+        }
+        return 0;
     }
 }
