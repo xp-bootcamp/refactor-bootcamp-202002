@@ -17,7 +17,15 @@ public class Fibonacci {
         if (position == 2) {
             return 1;
         } else {
-            return getFibonacci(position - 1) + getFibonacci(position - 2);
+            long f_1 = 1;
+            long f_2 = 1;
+            long result = 0;
+            for(int i=3; i<=position;i++){
+                result = f_1 + f_2;
+                f_2 = f_1;
+                f_1 = result;
+            }
+            return result;
         }
     }
 }
