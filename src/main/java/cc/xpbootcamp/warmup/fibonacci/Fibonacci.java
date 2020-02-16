@@ -8,19 +8,15 @@ public class Fibonacci {
     }
 
     public long getFibonacci(int position) {
-        if (position <1 || position>50){
+        if (position < 1 || position > 50) {
             throw new ValueException("position is out of bounding");
-        }
-        if (position == 1) {
-            return 1;
-        }
-        if (position == 2) {
+        } else if (position == 1 || position == 2) {
             return 1;
         } else {
             long f_1 = 1;
             long f_2 = 1;
             long result = 0;
-            for(int i=3; i<=position;i++){
+            for (int i = 3; i <= position; i++) {
                 result = f_1 + f_2;
                 f_2 = f_1;
                 f_1 = result;
