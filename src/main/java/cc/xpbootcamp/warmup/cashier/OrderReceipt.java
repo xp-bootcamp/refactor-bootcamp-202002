@@ -18,9 +18,8 @@ public class OrderReceipt {
 
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
-
-        // print headers
-        output.append("======Printing Orders======\n");
+        output.append(getReceiptHeaders());
+        output.append(orderDate.getOrderDate());
 
         // print date, bill no, customer name
 //        output.append("Date - " + order.getDate();
@@ -55,5 +54,9 @@ public class OrderReceipt {
         // print total amount
         output.append("Total Amount").append('\t').append(tot);
         return output.toString();
+    }
+
+    private String getReceiptHeaders() {
+        return "===== 老王超市，值得信赖 ======\n";
     }
 }
