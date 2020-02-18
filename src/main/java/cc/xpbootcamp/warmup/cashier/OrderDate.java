@@ -14,11 +14,26 @@ public class OrderDate {
     }
 
     public String getOrderDate() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月dd日");
+        String date_cn = getChineseDate();
+        String week_cn = getChineseWeek();
+        return date_cn + '，' + "星期" + week_cn + '\n';
+    }
+
+    private String getChineseWeek() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        String date_cn = simpleDateFormat.format(date.getTime());
-        String week_cn = daysOfWeek[calendar.get(Calendar.DAY_OF_WEEK)];
-        return date_cn + '，' + "星期" + week_cn + '\n';
+        return daysOfWeek[calendar.get(Calendar.DAY_OF_WEEK)];
+    }
+
+    private String getChineseDate() {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月dd日");
+        return simpleDateFormat.format(date.getTime());
+    }
+
+    public boolean isDiscountDay() {
+        return "三".equals(getChineseWeek());
+
+
+
     }
 }

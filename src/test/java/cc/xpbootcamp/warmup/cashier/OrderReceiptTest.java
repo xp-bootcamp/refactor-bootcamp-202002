@@ -12,9 +12,8 @@ import static org.hamcrest.Matchers.containsString;
 class OrderReceiptTest {
     @Test
     void shouldPrintReceiptHeaderAndDate() {
-        Order order = new Order("Mr X", "Chicago, 60601", new ArrayList<LineItem>());
         OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
-        OrderReceipt receipt = new OrderReceipt(order, orderDate);
+        OrderReceipt receipt = new OrderReceipt(new ArrayList<LineItem>(), orderDate);
 
         String output = receipt.printReceipt();
 
@@ -30,7 +29,7 @@ class OrderReceiptTest {
             add(new LineItem("小白菜", 10.00, 1));
         }};
         OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
-        OrderReceipt receipt = new OrderReceipt(new Order(null, null, lineItems), orderDate);
+        OrderReceipt receipt = new OrderReceipt(lineItems, orderDate);
 
         String output = receipt.printReceipt();
 
@@ -48,7 +47,7 @@ class OrderReceiptTest {
         }};
         OrderDate orderDate = new OrderDate(new Date(120, 1, 19));
 
-        OrderReceipt receipt = new OrderReceipt(new Order(null, null, lineItems), orderDate);
+        OrderReceipt receipt = new OrderReceipt(lineItems, orderDate);
 
         String output = receipt.printReceipt();
 

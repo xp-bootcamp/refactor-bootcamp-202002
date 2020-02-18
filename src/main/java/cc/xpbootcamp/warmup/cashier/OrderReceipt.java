@@ -1,5 +1,7 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import java.util.List;
+
 /**
  * OrderReceipt prints the details of order including customer name, address, description, quantity,
  * price and amount. It also calculates the sales tax @ 10% and prints as part
@@ -8,51 +10,70 @@ package cc.xpbootcamp.warmup.cashier;
  *
  */
 public class OrderReceipt {
-    private Order order;
+    private List<LineItem> lineItemList;
     private OrderDate orderDate;
 
-    public OrderReceipt(Order order, OrderDate orderDate) {
-        this.order = order;
+    public OrderReceipt(List<LineItem> lineItemList, OrderDate orderDate) {
+        this.lineItemList = lineItemList;
         this.orderDate = orderDate;
     }
 
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
+
         output.append(getReceiptHeaders());
         output.append(orderDate.getOrderDate());
+        output.append(getLineItemList());
+        output.append(getFooter());
+        return output.toString();
+    }
 
-        // print date, bill no, customer name
-//        output.append("Date - " + order.getDate();
-        output.append(order.getCustomerName());
-        output.append(order.getCustomerAddress());
-//        output.append(order.getCustomerLoyaltyNumber());
-
-        // prints lineItems
-        double totSalesTx = 0d;
-        double tot = 0d;
-        for (LineItem lineItem : order.getLineItems()) {
-            output.append(lineItem.getDescription());
-            output.append('\t');
-            output.append(lineItem.getPrice());
-            output.append('\t');
-            output.append(lineItem.getQuantity());
-            output.append('\t');
-            output.append(lineItem.totalAmount());
-            output.append('\n');
-
-            // calculate sales tax @ rate of 10%
-            double salesTax = lineItem.totalAmount() * .10;
-            totSalesTx += salesTax;
-
-            // calculate total amount of lineItem = price * quantity + 10 % sales tax
-            tot += lineItem.totalAmount() + salesTax;
+    private String getFooter() {
+        double totalTax = .0d;
+        double totalPrice = .0d;
+        double discount;
+        for (LineItem lineItem : lineItemList) {
+            totalTax += lineItem.totalAmount() * 0.1;
+            totalPrice += lineItem.totalAmount();
         }
+        totalPrice += totalTax;
+        StringBuilder output = new StringBuilder();
+        output.append("税额:   ");
+        output.append(String.format("%.2f", totalTax));
+        output.append("\n");
 
-        // prints the state tax
-        output.append("Sales Tax").append('\t').append(totSalesTx);
+        if (orderDate.isDiscountDay()){
+            discount = totalPrice * 0.02;
+            totalPrice = totalPrice - discount;
+            output.append("折扣:   ");
+            output.append(String.format("%.2f", discount));
+            output.append("\n");
+        }
+        output.append("总价:   ");
+        output.append(String.format("%.2f", totalPrice));
+        output.append("\n");
 
-        // print total amount
-        output.append("Total Amount").append('\t').append(tot);
+
+        return output.toString();
+
+    }
+
+
+    private String getLineItemList() {
+        StringBuilder output = new StringBuilder();
+        for (LineItem lineItem : lineItemList) {
+            output.append(lineItem.getDescription());
+            output.append(", ");
+            output.append(String.format("%.2f", lineItem.getPrice()));
+            output.append(" ");
+            output.append("x");
+            output.append(" ");
+            output.append(lineItem.getQuantity());
+            output.append(", ");
+            output.append(String.format("%.2f", lineItem.totalAmount()));
+            output.append("\n");
+        }
+        output.append("-----------------------------------\n");
         return output.toString();
     }
 
