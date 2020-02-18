@@ -13,27 +13,15 @@ public class OrderDate {
         this.date = date;
     }
 
-    public String getOrderDate() {
-        String date_cn = getChineseDate();
-        String week_cn = getChineseWeek();
-        return date_cn + '，' + "星期" + week_cn + '\n';
-    }
-
-    private String getChineseWeek() {
+    public String getChineseWeek() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        return daysOfWeek[calendar.get(Calendar.DAY_OF_WEEK)];
+        return "星期" + daysOfWeek[calendar.get(Calendar.DAY_OF_WEEK)];
     }
 
-    private String getChineseDate() {
+    public String getChineseDate() {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年M月dd日");
         return simpleDateFormat.format(date.getTime());
     }
 
-    public boolean isDiscountDay() {
-        return "三".equals(getChineseWeek());
-
-
-
-    }
 }

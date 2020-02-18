@@ -13,7 +13,8 @@ class OrderReceiptTest {
     @Test
     void shouldPrintReceiptHeaderAndDate() {
         OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
-        OrderReceipt receipt = new OrderReceipt(new ArrayList<LineItem>(), orderDate);
+
+        OrderReceipt receipt = new OrderReceipt(new Order(orderDate ,new ArrayList<LineItem>()));
 
         String output = receipt.printReceipt();
 
@@ -29,7 +30,7 @@ class OrderReceiptTest {
             add(new LineItem("小白菜", 10.00, 1));
         }};
         OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
-        OrderReceipt receipt = new OrderReceipt(lineItems, orderDate);
+        OrderReceipt receipt = new OrderReceipt(new Order(orderDate ,lineItems));
 
         String output = receipt.printReceipt();
 
@@ -47,7 +48,7 @@ class OrderReceiptTest {
         }};
         OrderDate orderDate = new OrderDate(new Date(120, 1, 19));
 
-        OrderReceipt receipt = new OrderReceipt(lineItems, orderDate);
+        OrderReceipt receipt = new OrderReceipt(new Order(orderDate, lineItems));
 
         String output = receipt.printReceipt();
 

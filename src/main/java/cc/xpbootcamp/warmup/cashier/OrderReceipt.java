@@ -1,7 +1,5 @@
 package cc.xpbootcamp.warmup.cashier;
 
-import java.util.List;
-
 /**
  * OrderReceipt prints the details of order including customer name, address, description, quantity,
  * price and amount. It also calculates the sales tax @ 10% and prints as part
@@ -10,71 +8,43 @@ import java.util.List;
  *
  */
 public class OrderReceipt {
-    private List<LineItem> lineItemList;
-    private OrderDate orderDate;
+    private Order order;
 
-    public OrderReceipt(List<LineItem> lineItemList, OrderDate orderDate) {
-        this.lineItemList = lineItemList;
-        this.orderDate = orderDate;
+    public OrderReceipt(Order order) {
+        this.order = order;
     }
 
     public String printReceipt() {
         StringBuilder output = new StringBuilder();
 
         output.append(getReceiptHeaders());
-        output.append(orderDate.getOrderDate());
-        output.append(getLineItemList());
+        output.append(order.getOrderDate());
+        output.append(order.getLineItemList());
         output.append(getFooter());
         return output.toString();
     }
 
     private String getFooter() {
-        double totalTax = .0d;
-        double totalPrice = .0d;
-        double discount;
-        for (LineItem lineItem : lineItemList) {
-            totalTax += lineItem.totalAmount() * 0.1;
-            totalPrice += lineItem.totalAmount();
-        }
-        totalPrice += totalTax;
+        double totalTax = order.calcTotalTax();
+        double totalPrice = order.calcTotalPrice(totalTax);
         StringBuilder output = new StringBuilder();
         output.append("税额:   ");
         output.append(String.format("%.2f", totalTax));
         output.append("\n");
-
-        if (orderDate.isDiscountDay()){
-            discount = totalPrice * 0.02;
-            totalPrice = totalPrice - discount;
+        if (order.isDiscountDay())
+        {
+            double totalDiscount = order.calcTotalDiscount(totalPrice);
+            totalPrice -= totalDiscount;
             output.append("折扣:   ");
-            output.append(String.format("%.2f", discount));
+            output.append(String.format("%.2f", totalDiscount));
             output.append("\n");
         }
+
         output.append("总价:   ");
         output.append(String.format("%.2f", totalPrice));
         output.append("\n");
-
-
         return output.toString();
 
-    }
-
-
-    private String getLineItemList() {
-        StringBuilder output = new StringBuilder();
-        for (LineItem lineItem : lineItemList) {
-            output.append(lineItem.getDescription());
-            output.append(", ");
-            output.append(String.format("%.2f", lineItem.getPrice()));
-            output.append(" ");
-            output.append("x");
-            output.append(" ");
-            output.append(lineItem.getQuantity());
-            output.append(", ");
-            output.append(String.format("%.2f", lineItem.totalAmount()));
-            output.append("\n");
-        }
-        output.append("-----------------------------------\n");
-        return output.toString();
     }
 
     private String getReceiptHeaders() {
