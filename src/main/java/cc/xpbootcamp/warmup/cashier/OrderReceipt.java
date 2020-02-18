@@ -9,9 +9,11 @@ package cc.xpbootcamp.warmup.cashier;
  */
 public class OrderReceipt {
     private Order order;
+    private OrderDate orderDate;
 
-    public OrderReceipt(Order order) {
+    public OrderReceipt(Order order, OrderDate orderDate) {
         this.order = order;
+        this.orderDate = orderDate;
     }
 
     public String printReceipt() {
