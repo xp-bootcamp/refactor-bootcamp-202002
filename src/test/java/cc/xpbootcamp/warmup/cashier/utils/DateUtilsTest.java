@@ -19,7 +19,7 @@ public class DateUtilsTest {
 
     @Test
     public void should_return_correct_formatted_string_when_format_give_a_invalid() {
-        assertEquals(DateUtils.format(date), "2020年2月19日 星期三");
+        assertEquals(DateUtils.format(date), "2020年2月19日，星期三");
     }
 
     @Test

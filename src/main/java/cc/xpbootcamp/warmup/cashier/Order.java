@@ -1,5 +1,7 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import cc.xpbootcamp.warmup.cashier.utils.DateUtils;
+
 import java.util.Date;
 import java.util.List;
 
@@ -9,12 +11,14 @@ public class Order {
     private List<Item> items;
     private double taxRate = 0.10;
     private Date createDate;
+    private double discountRate;
 
-    public Order(String cName, String addr, List<Item> items) {
-        this.customerName = cName;
+    public Order(String name, String addr, List<Item> items, Date date) {
+        this.customerName = name;
         this.customerAddress = addr;
         this.items = items;
-        createDate = new Date();
+        createDate = date;
+        discountRate = DateUtils.isWednesday(createDate) ? 0.98 : 1;
     }
 
     String getCustomerName() {
@@ -29,8 +33,12 @@ public class Order {
         this.taxRate = taxRate;
     }
 
-    public Date getCreateDate() {
+    Date getCreateDate() {
         return createDate;
+    }
+
+    boolean haveDiscount() {
+        return discountRate < 1;
     }
 
     List<Item> getLineItems() {
@@ -50,8 +58,11 @@ public class Order {
     }
 
     double getTotalAmount() {
-        return getPreTaxAmount() + getTotalTax();
+        return (getPreTaxAmount() + getTotalTax()) * discountRate;
     }
 
 
+    double getDiscount() {
+        return (getPreTaxAmount() + getTotalTax()) * (1 - discountRate);
+    }
 }

@@ -2,8 +2,6 @@ package cc.xpbootcamp.warmup.cashier;
 
 import cc.xpbootcamp.warmup.cashier.utils.DateUtils;
 
-import java.util.Date;
-
 /**
  * OrderReceipt prints the details of order including customer name, address, description, quantity,
  * price and amount. It also calculates the sales tax @ 10% and prints as part
@@ -13,6 +11,7 @@ import java.util.Date;
 public class OrderReceipt {
     private Order order;
     private static String HEADER = "===== 老王超市，值得信赖 ======" + '\n' + '\n';
+    private static String DIVIDER = "-----------------------------------" + '\n';
 
 
     public OrderReceipt(Order order) {
@@ -22,36 +21,42 @@ public class OrderReceipt {
     public String printReceipt() {
         return HEADER +
                 formatOrderCreateDate() +
-                initOrderBaseInfo() +
                 initOrderItemsInfo() +
+                DIVIDER +
                 initOrderSummarise();
-
     }
 
     private String formatOrderCreateDate() {
-        return DateUtils.format(order.getCreateDate());
-    }
-
-    private String initOrderBaseInfo() {
-        return order.getCustomerName() + order.getCustomerAddress();
+        return DateUtils.format(order.getCreateDate()) + '\n';
     }
 
     private String initOrderItemsInfo() {
-        String baseInfo = "";
+        StringBuilder baseInfo = new StringBuilder();
         for (Item lineItem : order.getLineItems()) {
-            String itemInfo = lineItem.getDescription() + '\t'
-                    + lineItem.getPrice() + '\t'
-                    + lineItem.getQuantity() + '\t'
-                    + lineItem.amount() + '\n';
-            baseInfo += itemInfo;
+            String itemInfo = lineItem.getDescription() + ", "
+                    + formatDouble(lineItem.getPrice()) + " x "
+                    + lineItem.getQuantity() + ", "
+                    + formatDouble(lineItem.amount()) + '\n';
+            baseInfo.append(itemInfo);
         }
-        return baseInfo;
+        return baseInfo.toString();
     }
 
     private String initOrderSummarise() {
-        return "Sales Tax" + '\t' + order.getTotalTax()
-                + "Total Amount" + '\t' + order.getTotalAmount();
+        return "税额:   " + formatDouble(order.getTotalTax()) + '\n' +
+                initDiscountInfo()
+                + "总价:   " + formatDouble(order.getTotalAmount()) + '\n';
+    }
 
+    private String initDiscountInfo() {
+        if (order.haveDiscount()) {
+            return "折扣:   " + formatDouble(order.getDiscount()) + '\n';
+        }
+        return "";
+    }
+
+    private String formatDouble(double d) {
+        return String.format("%.2f", d);
     }
 
 }
