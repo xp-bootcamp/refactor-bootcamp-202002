@@ -13,6 +13,10 @@ public class OrderDate {
         this.date = date;
     }
 
+    public OrderDate() {
+        this.date = new Date();
+    }
+
     public String getChineseWeek() {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);

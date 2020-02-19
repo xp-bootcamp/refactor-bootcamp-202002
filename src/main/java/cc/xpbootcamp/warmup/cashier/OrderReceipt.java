@@ -25,26 +25,39 @@ public class OrderReceipt {
     }
 
     private String getFooter() {
-        double totalTax = order.calcTotalTax();
-        double totalPrice = order.calcTotalPrice(totalTax);
         StringBuilder output = new StringBuilder();
-        output.append("税额:   ");
-        output.append(String.format("%.2f", totalTax));
-        output.append("\n");
-        if (order.isDiscountDay())
-        {
-            double totalDiscount = order.calcTotalDiscount(totalPrice);
-            totalPrice -= totalDiscount;
-            output.append("折扣:   ");
-            output.append(String.format("%.2f", totalDiscount));
-            output.append("\n");
-        }
-
-        output.append("总价:   ");
-        output.append(String.format("%.2f", totalPrice));
-        output.append("\n");
+        output.append(getTotalTax());
+        output.append(getTotalDiscount());
+        output.append((getTotalAmout()));
         return output.toString();
 
+    }
+
+    private String getTotalAmout() {
+        StringBuilder output = new StringBuilder();
+        output.append("总价:   ");
+        output.append(String.format("%.2f", order.calcTotalAmout()));
+        output.append("\n");
+        return output.toString();
+    }
+
+    private String getTotalDiscount() {
+        StringBuilder output = new StringBuilder();
+        if (order.isDiscountDay()){
+            output.append("折扣:   ");
+            output.append(String.format("%.2f", order.calcTotalDiscount()));
+            output.append("\n");
+        }
+        return output.toString();
+
+    }
+
+    private String getTotalTax() {
+        StringBuilder output = new StringBuilder();
+        output.append("税额:   ");
+        output.append(String.format("%.2f", order.calcTotalTax()));
+        output.append("\n");
+        return output.toString();
     }
 
     private String getReceiptHeaders() {

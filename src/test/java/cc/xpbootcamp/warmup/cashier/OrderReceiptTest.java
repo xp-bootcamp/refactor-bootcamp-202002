@@ -19,7 +19,7 @@ class OrderReceiptTest {
         String output = receipt.printReceipt();
 
 
-        assertThat(output, containsString("===== 老王超市，值得信赖 ======"));
+        assertThat(output, containsString("===== 老王超市，值得信赖 ======\n"));
         assertThat(output, containsString("2020年2月17日，星期一\n"));
     }
 
