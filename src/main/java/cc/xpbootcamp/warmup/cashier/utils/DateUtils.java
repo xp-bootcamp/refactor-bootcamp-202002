@@ -1,10 +1,10 @@
 package cc.xpbootcamp.warmup.cashier.utils;
 
-import java.sql.Date;
+import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Locale;
+
 
 public class DateUtils {
     static DateFormat df = DateFormat.getDateInstance(DateFormat.FULL, Locale.CHINA);

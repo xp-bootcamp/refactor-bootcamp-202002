@@ -9,6 +9,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 
 class OrderReceiptTest {
+
+
+
+
     @Test
     void shouldPrintCustomerInformationOnOrder() {
         Order order = new Order("Mr X", "Chicago, 60601", new ArrayList<Item>());

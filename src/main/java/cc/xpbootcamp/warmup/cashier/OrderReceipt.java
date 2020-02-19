@@ -12,10 +12,7 @@ import java.util.Date;
  */
 public class OrderReceipt {
     private Order order;
-    private static String HEADER = "===== 老王超市，值得信赖 ======" + '\n'+'\n';
-    private String baseInfo;
-    private String orderItemsInfo;
-    private String orderSummarise;
+    private static String HEADER = "===== 老王超市，值得信赖 ======" + '\n' + '\n';
 
 
     public OrderReceipt(Order order) {
@@ -23,19 +20,24 @@ public class OrderReceipt {
     }
 
     public String printReceipt() {
-    return HEADER +
-//        formatOrderCreateDate() +
-        initOrderBaseInfo() +
-        initOrderItemsInfo() +
-        initOrderSummarise() ;
+        return HEADER +
+                formatOrderCreateDate() +
+                initOrderBaseInfo() +
+                initOrderItemsInfo() +
+                initOrderSummarise();
 
+    }
+
+    private String formatOrderCreateDate() {
+        return DateUtils.format(order.getCreateDate());
     }
 
     private String initOrderBaseInfo() {
-         return baseInfo = order.getCustomerName() + order.getCustomerAddress();
+        return order.getCustomerName() + order.getCustomerAddress();
     }
 
     private String initOrderItemsInfo() {
+        String baseInfo = "";
         for (Item lineItem : order.getLineItems()) {
             String itemInfo = lineItem.getDescription() + '\t'
                     + lineItem.getPrice() + '\t'
@@ -47,9 +49,9 @@ public class OrderReceipt {
     }
 
     private String initOrderSummarise() {
-        orderSummarise = "Sales Tax" + '\t' + order.getTotalTax()
+        return "Sales Tax" + '\t' + order.getTotalTax()
                 + "Total Amount" + '\t' + order.getTotalAmount();
-        return orderSummarise;
+
     }
 
 }
