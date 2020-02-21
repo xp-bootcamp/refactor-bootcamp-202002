@@ -1,24 +1,16 @@
 package cc.xpbootcamp.warmup.cashier;
 
-import java.util.Date;
 import java.util.List;
 
 public class Order {
-    private final double taxPercent = 0.1;
-    private final double discount = 0.98;
+    private final double TAX_PERCENT = 0.1;
+    private final double DISCOUNT = 0.98;
     private OrderDate orderDate;
     private List<LineItem> lineItemList;
-    private Customer customer;
 
     public Order(OrderDate orderDate, List<LineItem> lineItemList) {
         this.orderDate = orderDate;
         this.lineItemList = lineItemList;
-    }
-
-    public Order(OrderDate orderDate, List<LineItem> lineItemList, Customer customer) {
-        this.orderDate = orderDate;
-        this.lineItemList = lineItemList;
-        this.customer = customer;
     }
 
     public  String getOrderDate(){
@@ -48,12 +40,12 @@ public class Order {
     public double calcTotalTax(){
         double totalTax = .0d;
         for (LineItem lineItem : lineItemList) {
-            totalTax += lineItem.totalAmount() * taxPercent;
+            totalTax += lineItem.totalAmount() * TAX_PERCENT;
         }
         return totalTax;
     }
 
-    public double calcTotalAmout(){
+    public double calcTotalAmount(){
         double totalPrice = .0d;
         for (LineItem lineItem : lineItemList) {
             totalPrice += lineItem.totalAmount();
@@ -73,7 +65,7 @@ public class Order {
         for (LineItem lineItem : lineItemList) {
             totalPrice += lineItem.totalAmount();
         }
-        return (totalPrice + calcTotalTax()) * (1 - discount);
+        return (totalPrice + calcTotalTax()) * (1 - DISCOUNT);
     }
 }
 

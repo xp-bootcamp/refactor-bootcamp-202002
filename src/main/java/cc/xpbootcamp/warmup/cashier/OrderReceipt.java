@@ -18,10 +18,17 @@ public class OrderReceipt {
         StringBuilder output = new StringBuilder();
 
         output.append(getReceiptHeaders());
-        output.append(order.getOrderDate());
-        output.append(order.getLineItemList());
+        output.append(getReceiptBody());
         output.append(getFooter());
         return output.toString();
+    }
+
+    private String getReceiptBody() {
+        StringBuilder output = new StringBuilder();
+        output.append(order.getOrderDate());
+        output.append(order.getLineItemList());
+        return output.toString();
+
     }
 
     private String getFooter() {
@@ -36,7 +43,7 @@ public class OrderReceipt {
     private String getTotalAmout() {
         StringBuilder output = new StringBuilder();
         output.append("总价:   ");
-        output.append(String.format("%.2f", order.calcTotalAmout()));
+        output.append(String.format("%.2f", order.calcTotalAmount()));
         output.append("\n");
         return output.toString();
     }

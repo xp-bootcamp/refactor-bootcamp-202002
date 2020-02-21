@@ -51,6 +51,7 @@ class OrderReceiptTest {
         OrderReceipt receipt = new OrderReceipt(new Order(orderDate, lineItems));
 
         String output = receipt.printReceipt();
+        System.out.println(output);
 
         assertThat(output, containsString("巧克力, 21.50 x 2, 43.00\n"));
         assertThat(output, containsString("小白菜, 10.00 x 1, 10.00\n"));
