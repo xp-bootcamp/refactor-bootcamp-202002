@@ -2,6 +2,7 @@ package cc.xpbootcamp.warmup.cashier;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,15 +13,15 @@ import static org.hamcrest.Matchers.containsString;
 class OrderReceiptTest {
     @Test
     void shouldPrintReceiptHeaderAndDate() {
-        OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
+        Date orderDate = new Date(120, 1, 17);
 
         OrderReceipt receipt = new OrderReceipt(new Order(orderDate ,new ArrayList<LineItem>()));
 
         String output = receipt.printReceipt();
 
 
-        assertThat(output, containsString("===== 老王超市，值得信赖 ======\n"));
-        assertThat(output, containsString("2020年2月17日，星期一\n"));
+        assertThat(output, containsString("===== 老王超市, 值得信赖 ======\n"));
+        assertThat(output, containsString("2020年2月17日, 星期一\n"));
     }
 
     @Test
@@ -29,7 +30,7 @@ class OrderReceiptTest {
             add(new LineItem("巧克力", 21.50, 2));
             add(new LineItem("小白菜", 10.00, 1));
         }};
-        OrderDate orderDate = new OrderDate(new Date(120, 1, 17));
+        Date orderDate = new Date(120, 1, 17);
         OrderReceipt receipt = new OrderReceipt(new Order(orderDate ,lineItems));
 
         String output = receipt.printReceipt();
@@ -46,7 +47,7 @@ class OrderReceiptTest {
             add(new LineItem("巧克力", 21.50, 2));
             add(new LineItem("小白菜", 10.00, 1));
         }};
-        OrderDate orderDate = new OrderDate(new Date(120, 1, 19));
+        Date orderDate = new Date(120, 1, 19);
 
         OrderReceipt receipt = new OrderReceipt(new Order(orderDate, lineItems));
 

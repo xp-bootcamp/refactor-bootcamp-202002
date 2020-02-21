@@ -25,7 +25,7 @@ public class OrderReceipt {
 
     private String getReceiptBody() {
         StringBuilder output = new StringBuilder();
-        output.append(order.getOrderDate());
+        output.append(order.getOrderDate()).append('\n');
         output.append(order.getLineItemList());
         return output.toString();
 
@@ -68,6 +68,6 @@ public class OrderReceipt {
     }
 
     private String getReceiptHeaders() {
-        return "===== 老王超市，值得信赖 ======\n";
+        return "===== 老王超市, 值得信赖 ======\n";
     }
 }

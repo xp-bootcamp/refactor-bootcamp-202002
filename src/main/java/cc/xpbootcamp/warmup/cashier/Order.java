@@ -1,22 +1,27 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Order {
     private final double TAX_PERCENT = 0.1;
     private final double DISCOUNT = 0.98;
-    private OrderDate orderDate;
+    private final String DISCOUNT_DAY = "星期三";
+    private Date orderDate;
     private List<LineItem> lineItemList;
 
-    public Order(OrderDate orderDate, List<LineItem> lineItemList) {
+    public Order(Date orderDate, List<LineItem> lineItemList) {
         this.orderDate = orderDate;
         this.lineItemList = lineItemList;
     }
 
     public  String getOrderDate(){
-        String date_cn = orderDate.getChineseDate();
-        String week_cn = orderDate.getChineseWeek();
-        return date_cn + '，' + week_cn + '\n';
+        return new SimpleDateFormat("yyyy年M月dd日, E\n", Locale.CHINA).format(orderDate);
+    }
+    private  String getDayOfWeek(){
+        return new SimpleDateFormat("E\n", Locale.CHINA).format(orderDate);
     }
 
     public String getLineItemList() {
@@ -56,8 +61,7 @@ public class Order {
 
 
     public boolean isDiscountDay() {
-        return "星期三".equals(orderDate.getChineseWeek());
-
+        return DISCOUNT_DAY.equals(getDayOfWeek().trim());
     }
 
     public double calcTotalDiscount() {
