@@ -24,22 +24,8 @@ public class Order {
         return new SimpleDateFormat("E\n", Locale.CHINA).format(orderDate);
     }
 
-    public String getLineItemList() {
-        StringBuilder output = new StringBuilder();
-        for (LineItem lineItem : lineItemList) {
-            output.append(lineItem.getDescription());
-            output.append(", ");
-            output.append(String.format("%.2f", lineItem.getPrice()));
-            output.append(" ");
-            output.append("x");
-            output.append(" ");
-            output.append(lineItem.getQuantity());
-            output.append(", ");
-            output.append(String.format("%.2f", lineItem.totalAmount()));
-            output.append("\n");
-        }
-        output.append("-----------------------------------\n");
-        return output.toString();
+    public List<LineItem> getLineItemList() {
+        return lineItemList;
     }
 
     public double calcTotalTax(){

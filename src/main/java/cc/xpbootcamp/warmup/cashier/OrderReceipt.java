@@ -5,10 +5,11 @@ package cc.xpbootcamp.warmup.cashier;
  * price and amount. It also calculates the sales tax @ 10% and prints as part
  * of order. It computes the total order amount (amount of individual lineItems +
  * total sales tax) and prints it.
- *
  */
 public class OrderReceipt {
     private Order order;
+    private final String LINE_ITEM_PRINT_FORMAT = "%s, %.2f x %s, %.2f\n";
+    private final String SEPARATE_LINE = "-----------------------------------\n";
 
     public OrderReceipt(Order order) {
         this.order = order;
@@ -26,9 +27,18 @@ public class OrderReceipt {
     private String getReceiptBody() {
         StringBuilder output = new StringBuilder();
         output.append(order.getOrderDate()).append('\n');
-        output.append(order.getLineItemList());
+        output.append(printLineItemList());
+        output.append(SEPARATE_LINE);
         return output.toString();
 
+    }
+
+    private String printLineItemList() {
+        StringBuilder output = new StringBuilder();
+        for (LineItem lineItem : order.getLineItemList()) {
+            output.append(String.format(LINE_ITEM_PRINT_FORMAT, lineItem.getDescription(), lineItem.getPrice(), lineItem.getQuantity(), lineItem.totalAmount()));
+        }
+        return output.toString();
     }
 
     private String getFooter() {
@@ -50,7 +60,7 @@ public class OrderReceipt {
 
     private String getTotalDiscount() {
         StringBuilder output = new StringBuilder();
-        if (order.isDiscountDay()){
+        if (order.isDiscountDay()) {
             output.append("折扣:   ");
             output.append(String.format("%.2f", order.calcTotalDiscount()));
             output.append("\n");
