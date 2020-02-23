@@ -29,19 +29,11 @@ public class Order {
     }
 
     public double calcTotalTax(){
-        double totalTax = .0d;
-        for (LineItem lineItem : lineItemList) {
-            totalTax += lineItem.totalAmount() * TAX_PERCENT;
-        }
-        return totalTax;
+        return lineItemList.stream().mapToDouble(lineItem -> lineItem.totalAmount()*TAX_PERCENT).sum();
     }
 
     public double calcTotalAmount(){
-        double totalPrice = .0d;
-        for (LineItem lineItem : lineItemList) {
-            totalPrice += lineItem.totalAmount();
-        }
-
+        double totalPrice = lineItemList.stream().mapToDouble(LineItem::totalAmount).sum();
         return totalPrice + calcTotalTax() - (isDiscountDay() ? calcTotalDiscount() : 0);
     }
 

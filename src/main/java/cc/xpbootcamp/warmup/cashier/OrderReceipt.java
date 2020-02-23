@@ -1,5 +1,7 @@
 package cc.xpbootcamp.warmup.cashier;
 
+import java.util.stream.Collectors;
+
 /**
  * OrderReceipt prints the details of order including customer name, address, description, quantity,
  * price and amount. It also calculates the sales tax @ 10% and prints as part
@@ -8,49 +10,51 @@ package cc.xpbootcamp.warmup.cashier;
  */
 public class OrderReceipt {
     private Order order;
-    private final String LINE_ITEM_PRINT_FORMAT = "%s, %.2f x %s, %.2f\n";
-    private final String SEPARATE_LINE = "-----------------------------------\n";
+    private static final String LINE_ITEM_PRINT_FORMAT = "%s, %.2f x %s, %.2f\n";
+    private static final String SEPARATE_LINE = "-----------------------------------\n";
 
     public OrderReceipt(Order order) {
         this.order = order;
     }
 
     public String printReceipt() {
-        StringBuilder output = new StringBuilder();
 
-        output.append(getReceiptHeaders());
-        output.append(getReceiptBody());
-        output.append(getFooter());
-        return output.toString();
+        String output = printReceiptHeaders() +
+                printDateInfo() + '\n' +
+                printReceiptBody() +
+                printFooter();
+        return output;
     }
 
-    private String getReceiptBody() {
+    private String printDateInfo() {
+        return order.getOrderDate();
+    }
+
+    private String printReceiptBody() {
         StringBuilder output = new StringBuilder();
-        output.append(order.getOrderDate()).append('\n');
         output.append(printLineItemList());
         output.append(SEPARATE_LINE);
         return output.toString();
 
     }
-
+    private String getLineItemInfo(LineItem lineItem){
+        return String.format(LINE_ITEM_PRINT_FORMAT, lineItem.getDescription(), lineItem.getPrice(),
+                lineItem.getQuantity(), lineItem.totalAmount());
+    }
     private String printLineItemList() {
-        StringBuilder output = new StringBuilder();
-        for (LineItem lineItem : order.getLineItemList()) {
-            output.append(String.format(LINE_ITEM_PRINT_FORMAT, lineItem.getDescription(), lineItem.getPrice(), lineItem.getQuantity(), lineItem.totalAmount()));
-        }
-        return output.toString();
+        return order.getLineItemList().stream().map(this::getLineItemInfo).collect(Collectors.joining());
     }
 
-    private String getFooter() {
+    private String printFooter() {
         StringBuilder output = new StringBuilder();
         output.append(getTotalTax());
         output.append(getTotalDiscount());
-        output.append((getTotalAmout()));
+        output.append((getTotalAmount()));
         return output.toString();
 
     }
 
-    private String getTotalAmout() {
+    private String getTotalAmount() {
         StringBuilder output = new StringBuilder();
         output.append("总价:   ");
         output.append(String.format("%.2f", order.calcTotalAmount()));
@@ -77,7 +81,7 @@ public class OrderReceipt {
         return output.toString();
     }
 
-    private String getReceiptHeaders() {
+    private String printReceiptHeaders() {
         return "===== 老王超市, 值得信赖 ======\n";
     }
 }
