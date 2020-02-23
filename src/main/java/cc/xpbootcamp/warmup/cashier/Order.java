@@ -43,10 +43,8 @@ public class Order {
     }
 
     public double calcTotalDiscount() {
-        double totalPrice = .0d;
-        for (LineItem lineItem : lineItemList) {
-            totalPrice += lineItem.totalAmount();
-        }
+
+        double totalPrice = lineItemList.stream().mapToDouble(LineItem::totalAmount).sum();
         return (totalPrice + calcTotalTax()) * (1 - DISCOUNT);
     }
 }

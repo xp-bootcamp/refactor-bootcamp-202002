@@ -46,15 +46,14 @@ public class OrderReceipt {
     }
 
     private String printFooter() {
-        StringBuilder output = new StringBuilder();
-        output.append(getTotalTax());
-        output.append(getTotalDiscount());
-        output.append((getTotalAmount()));
-        return output.toString();
+        String output = printTotalTax() +
+                printTotalDiscount() +
+                printTotalAmount();
+        return output;
 
     }
 
-    private String getTotalAmount() {
+    private String printTotalAmount() {
         StringBuilder output = new StringBuilder();
         output.append("总价:   ");
         output.append(String.format("%.2f", order.calcTotalAmount()));
@@ -62,7 +61,7 @@ public class OrderReceipt {
         return output.toString();
     }
 
-    private String getTotalDiscount() {
+    private String printTotalDiscount() {
         StringBuilder output = new StringBuilder();
         if (order.isDiscountDay()) {
             output.append("折扣:   ");
@@ -73,7 +72,7 @@ public class OrderReceipt {
 
     }
 
-    private String getTotalTax() {
+    private String printTotalTax() {
         StringBuilder output = new StringBuilder();
         output.append("税额:   ");
         output.append(String.format("%.2f", order.calcTotalTax()));
