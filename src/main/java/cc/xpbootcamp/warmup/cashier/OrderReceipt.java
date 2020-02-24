@@ -19,18 +19,18 @@ public class OrderReceipt {
 
     public String printReceipt() {
 
-        String output = printReceiptHeaders() +
-                printDateInfo() + '\n' +
-                printReceiptBody() +
-                printFooter();
+        String output = buildReceiptHeaders() +
+                buildDateInfo() + '\n' +
+                buildReceiptBody() +
+                buildFooter();
         return output;
     }
 
-    private String printDateInfo() {
+    private String buildDateInfo() {
         return order.getOrderDate();
     }
 
-    private String printReceiptBody() {
+    private String buildReceiptBody() {
         StringBuilder output = new StringBuilder();
         output.append(printLineItemList());
         output.append(SEPARATE_LINE);
@@ -45,7 +45,7 @@ public class OrderReceipt {
         return order.getLineItemList().stream().map(this::getLineItemInfo).collect(Collectors.joining());
     }
 
-    private String printFooter() {
+    private String buildFooter() {
         String output = printTotalTax() +
                 printTotalDiscount() +
                 printTotalAmount();
@@ -80,7 +80,7 @@ public class OrderReceipt {
         return output.toString();
     }
 
-    private String printReceiptHeaders() {
+    private String buildReceiptHeaders() {
         return "===== 老王超市, 值得信赖 ======\n";
     }
 }
